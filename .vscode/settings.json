@@ -1,19 +1,25 @@
 {
     "cSpell.words": [
+        "Avenir",
+        "chatbox",
         "Cyxs",
         "dotenv",
         "fastapi",
         "FYACGEF",
         "Gdyb",
         "groq",
+        "isbot",
         "langchain",
+        "messagebubble",
         "mpirunthapan",
         "numpy",
         "Ptcp",
         "pycache",
         "pymongo",
+        "stylesheet",
         "uvicorn",
         "UWNICI",
-        "venv"
+        "venv",
+        "vite"
     ]
 }

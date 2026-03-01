@@ -2,6 +2,8 @@ import os
 from dotenv import load_dotenv
 from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.messages import HumanMessage, AIMessage
+from langchain_core.prompts import MessagesPlaceholder
 from pymongo import MongoClient
 from datetime import datetime
 from fastapi import FastAPI
@@ -32,8 +34,12 @@ app.add_middleware(
 
 prompt = ChatPromptTemplate.from_messages(
         [
-            ("system", "You are a helpful assistant."),
-            ("placeholder", "{history}"),
+            ("system", 
+            "You are ChatGPT, a friendly, professional, and knowledgeable AI assistant. "
+            "Answer naturally like a human expert. Use short paragraphs and bullet points only when helpful. "
+            "Avoid tables. Keep responses clear, conversational, and engaging."
+            ),
+            MessagesPlaceholder(variable_name="history"),
             ("user", "{question}")
         ]
     )
@@ -42,10 +48,15 @@ llm = ChatGroq(api_key = groq_api_key, model="openai/gpt-oss-20b")
 chain = prompt | llm
 
 def get_chat_history(user_id):
-    chats = collection.find({"user_id": user_id}).sort("timestamp", 1)
+    chats = collection.find({"user_id": user_id}).sort("timestamp", -1).limit(4)
+
     history = []
-    for chat in chats:
-        history.append((chat["role"], chat["message"]))
+    for chat in reversed(list(chats)):
+        if chat["role"] == "user":
+            history.append(HumanMessage(content=chat["message"]))
+        else:
+            history.append(AIMessage(content=chat["message"]))
+
     return history
 
 @app.get("/")
@@ -76,5 +87,9 @@ def chat(request: ChatRequest):
         }
     )
 
-    return {"response": response.content}
+    return {
+    "status": "success",
+    "answer": response.content,
+    "timestamp": datetime.utcnow().isoformat()
+}
 
