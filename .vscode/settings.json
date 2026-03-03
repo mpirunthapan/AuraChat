@@ -13,6 +13,7 @@
         "messagebubble",
         "mpirunthapan",
         "numpy",
+        "Pirunthapan",
         "Ptcp",
         "pycache",
         "pymongo",
