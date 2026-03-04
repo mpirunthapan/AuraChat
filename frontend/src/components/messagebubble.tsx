@@ -21,7 +21,7 @@ export default function MessageBubble({ role, content }: Message) {
                 max-w-[75%] px-4 py-3 rounded-2xl text-sm leading-relaxed shadow
                 ${isUser
                     ? "bg-indigo-600 text-white rounded-br-md"
-                    : "bg-zinc-800 text-white rounded-bl-md"
+                    : "bg-primary dark:bg-primary-dark dark:text-white text-zinc-800 rounded-bl-md"
                 }
                 `}
             >
