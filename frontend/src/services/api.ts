@@ -1,4 +1,4 @@
-const API_URL = "https://aurachat-fcn6.onrender.com/"
+const API_URL = "https://aurachat-fcn6.onrender.com/chat"
 
 export async function sendMessage(user_id: string, question: string) {
     const response = await fetch(API_URL, {
