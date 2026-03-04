@@ -45,7 +45,7 @@ export default function ChatBox() {
 
         setMessages((prev) => [
             ...prev,
-            { role: "assistant", content: data.response },
+            { role: "assistant", content: data.answer },
         ]);
         } finally {
         setLoading(false);
